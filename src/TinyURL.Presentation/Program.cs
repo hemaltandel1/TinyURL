@@ -11,17 +11,8 @@ public class Program
 
         public static async Task Main(string[] args)
         {
-            // Setup DI
-            var serviceProvider = new ServiceCollection()
-                .AddInfrastructureServices()
-                .AddApplicationServices()
-                .AddSingleton<IUrlShortener, UrlShortener>()
-                .AddMediatR(cfg =>
-                {
-                    //Register the API Assembly, one IRequestHandler from the Application Assembly, one type from Infrastructure 
-                    cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(Application.AssemblyReference).Assembly);
-                })
-                .BuildServiceProvider();
+        // Setup DI
+        var serviceProvider = ConfigureServices();
 
             // Resolve the dependency
             _urlShortener = serviceProvider.GetRequiredService<IUrlShortener>();
@@ -29,6 +20,20 @@ public class Program
             // Start the application
             await RunMenuAsync();
         }
+
+    public static ServiceProvider ConfigureServices() 
+    {
+        return new ServiceCollection()
+                    .AddInfrastructureServices()
+                    .AddApplicationServices()
+                    .AddSingleton<IUrlShortener, UrlShortener>()
+                    .AddMediatR(cfg =>
+                    {
+                        //Register the API Assembly, one IRequestHandler from the Application Assembly, one type from Infrastructure 
+                        cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(Application.AssemblyReference).Assembly);
+                    })
+                    .BuildServiceProvider();
+    }
 
         private static async Task RunMenuAsync()
         {
