@@ -27,7 +27,7 @@ public class Program
                     .AddSingleton<IUrlShortener, UrlShortener>()
                     .AddMediatR(cfg =>
                     {
-                        //Register the API Assembly, one IRequestHandler from the Application Assembly, one type from Infrastructure 
+                        //Register the API Assembly, one IRequestHandler from the Application Assembly
                         cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(Application.AssemblyReference).Assembly);
                     })
                     .BuildServiceProvider();
