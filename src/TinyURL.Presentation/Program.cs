@@ -80,6 +80,12 @@ public class Program
             Console.Write("Enter the long URL: ");
             var longUrl = Console.ReadLine()?.Trim();
 
+            if (string.IsNullOrWhiteSpace(longUrl))
+            {
+                Console.WriteLine("Invalid long URL format.");
+                return;
+            }
+
             Console.Write("Enter a custom short URL (optional): ");
             var customUrl = Console.ReadLine()?.Trim();
 
