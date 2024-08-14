@@ -25,9 +25,16 @@ public sealed class UrlShortener : IUrlShortener
         return result;
     }
 
-    public Task<bool> DeleteShortUrlAsync(string shortUrl, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteShortUrlAsync(string shortUrl, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var command = new DeleteShortUrlCommand()
+        {
+            ShortUrl = shortUrl
+        };
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        return result;
     }
         
 

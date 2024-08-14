@@ -131,7 +131,15 @@ public class Program
                 return;
             }
 
-            await _urlShortener.DeleteShortUrlAsync(shortUrl, cancellationToken);
+            var deleted = await _urlShortener.DeleteShortUrlAsync(shortUrl, cancellationToken);
+            if(deleted)
+            {
+                Console.WriteLine($"Short URL deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"Short URL failed to delete.");
+            }
         }
         catch (Exception ex)
         {

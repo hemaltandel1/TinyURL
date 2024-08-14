@@ -4,25 +4,24 @@ using TinyURL.Domain.Urls;
 
 namespace TinyURL.Application.Urls;
 
-public sealed class GetShortUrlStatisticsQuery : IRequest<int>
+public sealed class DeleteShortUrlCommand : IRequest<bool>
 {
     public string ShortUrl { get; set; }
 }
 
-public sealed class GetShortUrlStatisticsQuerydHandler(IUrlRepository urlRepository) : IRequestHandler<GetShortUrlStatisticsQuery, int>
+public sealed class DeleteShortUrlCommandHandler(IUrlRepository urlRepository) : IRequestHandler<DeleteShortUrlCommand, bool>
 {
-    public async Task<int> Handle(GetShortUrlStatisticsQuery request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteShortUrlCommand request, CancellationToken cancellationToken)
     {
-
         var code = ShortenedUrl.GetCode(request.ShortUrl);
 
         var shortendUrl = await urlRepository.GetShortenedUrlByCode(code, cancellationToken);
 
-        if(shortendUrl == null) 
+        if (shortendUrl == null)
         {
             throw new ArgumentNullException("Short URL not found.");
-        }               
-        
-        return shortendUrl.ClickCount;
+        }
+
+        return await urlRepository.DeleteAsync(shortendUrl.Id, cancellationToken);
     }
 }

@@ -28,6 +28,11 @@ public sealed class UrlInMemoryRepository : IUrlRepository
         return false;
     }
 
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _dataStorage.RemoveAsync(id, cancellationToken);
+    }
+
     public async Task<ShortenedUrl?> GetShortenedUrlByCode(string code, CancellationToken cancellationToken = default)
     {
         return await _dataStorage.FindByCodeAsync(code, cancellationToken);

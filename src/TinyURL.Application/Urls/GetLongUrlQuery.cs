@@ -20,7 +20,7 @@ public sealed class GetLongUrlQuerydHandler(IUrlRepository urlRepository) : IReq
 
         if(shortendUrl == null) 
         {
-            throw new ArgumentNullException("Long URL not found.");
+            throw new ArgumentNullException("Short URL not found.");
         }
 
         shortendUrl.IncreaseClickCount();
