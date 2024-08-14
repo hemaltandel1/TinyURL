@@ -49,7 +49,7 @@ public class Program
             Console.WriteLine("5. Exit");
             Console.Write("Select an option: ");
 
-            var input = Console.ReadLine();
+            var input = Console.ReadLine()?.Trim();
             switch (input)
             {
                 case "1":
@@ -78,10 +78,10 @@ public class Program
         try
         {
             Console.Write("Enter the long URL: ");
-            var longUrl = Console.ReadLine();
+            var longUrl = Console.ReadLine()?.Trim();
 
             Console.Write("Enter a custom short URL (optional): ");
-            var customUrl = Console.ReadLine();
+            var customUrl = Console.ReadLine()?.Trim();
 
             if (!Uri.IsWellFormedUriString(longUrl, UriKind.Absolute))
             {
@@ -104,7 +104,7 @@ public class Program
         try
         {
             Console.Write("Enter the short URL: ");
-            var shortUrl = Console.ReadLine();
+            var shortUrl = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrEmpty(shortUrl) || !IsValidShortUrl(shortUrl))
             {
@@ -126,7 +126,7 @@ public class Program
         try
         {
             Console.Write("Enter the short URL to delete: ");
-            var shortUrl = Console.ReadLine();
+            var shortUrl = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrEmpty(shortUrl) || !IsValidShortUrl(shortUrl))
             {
@@ -155,7 +155,7 @@ public class Program
         try
         {
             Console.Write("Enter the short URL to get statistics: ");
-            string? shortUrl = Console.ReadLine();
+            string? shortUrl = Console.ReadLine()?.Trim();
 
             if (string.IsNullOrEmpty(shortUrl) || !IsValidShortUrl(shortUrl))
             {
