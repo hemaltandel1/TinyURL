@@ -2,7 +2,9 @@
 
 namespace TinyURL.Infrastructure.Persistence;
 
-public class SemaphoreSlimInMemoryDataStorage<TKey, TValue> : IDataStorage<TKey, TValue> where TValue : class
+public class SemaphoreSlimInMemoryDataStorage<TKey, TValue> : IDataStorage<TKey, TValue>
+    where TKey : notnull
+    where TValue : class
 {
     private readonly Dictionary<TKey, TValue> _store = new Dictionary<TKey, TValue>();
     private readonly Dictionary<string, TKey> _codeIndex = new Dictionary<string, TKey>(); // Index for fast retrieval by Code

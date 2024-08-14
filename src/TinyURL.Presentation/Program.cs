@@ -7,8 +7,6 @@ namespace TinyURL.Presentation;
 
 public class Program
 {
-    private static IUrlShortener? _urlShortener;
-
     public static async Task Main(string[] args)
     {
         // Setup DI
