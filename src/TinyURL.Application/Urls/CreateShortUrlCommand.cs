@@ -5,7 +5,8 @@ namespace TinyURL.Application.Urls;
 
 public sealed class CreateShortUrlCommand : IRequest<string>
 {
-    public string Url { get; set; }
+    public required string LongUrl { get; set; }
+    public string? CustomUrl { get; set; }
 }
 
 public sealed class CreateShortUrlCommandHandler : IRequestHandler<CreateShortUrlCommand, string>
@@ -21,11 +22,23 @@ public sealed class CreateShortUrlCommandHandler : IRequestHandler<CreateShortUr
 
     public async Task<string> Handle(CreateShortUrlCommand request, CancellationToken cancellationToken)
     {
-        // Check if custom code exits, if yes check if it's exist in db. if yes, return error, if not create and save to db
-        // generate unique Code
-        var code = await _urlShortningService.GenerateUniqueCodeAsync();
+        string? customUrl = null;
+        if (!string.IsNullOrWhiteSpace(request.CustomUrl))
+        {
+            var exist = await _urlRepository.CodeExistAsync(request.CustomUrl);
+            if (exist)
+            {
+                throw new ArgumentException("Custom URL already exists.");
+            }
+            else
+            {
+                customUrl = request.CustomUrl;
+            }
+        }
 
-        var shortendUrl = ShortenedUrl.Create(request.Url, code);
+        var code = customUrl ?? await _urlShortningService.GenerateUniqueCodeAsync();
+
+        var shortendUrl = ShortenedUrl.Create(request.LongUrl, code);
 
         await _urlRepository.InsertAsync(shortendUrl);
 

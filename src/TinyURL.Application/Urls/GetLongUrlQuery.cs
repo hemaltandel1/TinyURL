@@ -6,7 +6,7 @@ namespace TinyURL.Application.Urls;
 
 public sealed class GetLongUrlQuery : IRequest<string>
 {
-    public string ShortUrl { get; set; }
+    public required string ShortUrl { get; set; }
 }
 
 public sealed class GetLongUrlQuerydHandler(IUrlRepository urlRepository) : IRequestHandler<GetLongUrlQuery, string>

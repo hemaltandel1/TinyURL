@@ -17,7 +17,8 @@ public sealed class UrlShortener : IUrlShortener
     {
         var command = new CreateShortUrlCommand()
         {
-            Url = longUrl
+            LongUrl = longUrl,
+            CustomUrl = customUrl,
         };
 
         var result = await _mediator.Send(command, cancellationToken);

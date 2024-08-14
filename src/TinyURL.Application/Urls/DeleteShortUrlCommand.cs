@@ -6,7 +6,7 @@ namespace TinyURL.Application.Urls;
 
 public sealed class DeleteShortUrlCommand : IRequest<bool>
 {
-    public string ShortUrl { get; set; }
+    public required string ShortUrl { get; set; }
 }
 
 public sealed class DeleteShortUrlCommandHandler(IUrlRepository urlRepository) : IRequestHandler<DeleteShortUrlCommand, bool>

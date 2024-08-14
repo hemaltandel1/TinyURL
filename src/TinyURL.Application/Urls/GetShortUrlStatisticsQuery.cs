@@ -6,7 +6,7 @@ namespace TinyURL.Application.Urls;
 
 public sealed class GetShortUrlStatisticsQuery : IRequest<int>
 {
-    public string ShortUrl { get; set; }
+    public required string ShortUrl { get; set; }
 }
 
 public sealed class GetShortUrlStatisticsQuerydHandler(IUrlRepository urlRepository) : IRequestHandler<GetShortUrlStatisticsQuery, int>
