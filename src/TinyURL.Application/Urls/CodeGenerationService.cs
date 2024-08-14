@@ -22,11 +22,13 @@ internal sealed class CodeGenerationService : ICodeGenerationService
         _urlRepository = urlRepository;
     }
 
+    // Improvement: It will increase latency as we are checking each generated code agains database.
+    // We can improve it by pre generating unique code in database.
+    // Another improvement point would be use fixed number of iteration instead of infinite loop. Throw exception after a few collission in a row.
     public async Task<string> GenerateUniqueCodeAsync()
     {
         var codeChars = new char[Length];
         
-        // todo add const
         int maxValue = Alphabet.Length;
 
         while (true)
@@ -39,7 +41,7 @@ internal sealed class CodeGenerationService : ICodeGenerationService
             }
 
             var code = new string(codeChars);
-
+                        
             if (!await _urlRepository.CodeExistAsync(code))
             {
                 return code;

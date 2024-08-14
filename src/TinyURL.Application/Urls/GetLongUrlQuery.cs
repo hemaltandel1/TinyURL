@@ -16,6 +16,7 @@ public sealed class GetLongUrlQuerydHandler(IUrlRepository urlRepository) : IReq
 
         var code = ShortenedUrl.GetCode(request.ShortUrl);
 
+        // Improvement: We should we using caching to improve performace and reduce database calls
         var shortendUrl = await urlRepository.GetShortenedUrlByCode(code, cancellationToken);
 
         if(shortendUrl == null) 
