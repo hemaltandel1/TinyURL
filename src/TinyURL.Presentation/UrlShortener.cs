@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Threading;
 using TinyURL.Application.Urls;
 
 namespace TinyURL.Presentation;
@@ -13,7 +12,7 @@ public sealed class UrlShortener : IUrlShortener
         _mediator = mediator;
     }
 
-    public async Task<string> GenerateShortUrlAsync(string longUrl, string customUrl = null, CancellationToken cancellationToken = default)
+    public async Task<string> GenerateShortUrlAsync(string longUrl, string? customUrl = null, CancellationToken cancellationToken = default)
     {
         var command = new CreateShortUrlCommand()
         {
@@ -37,7 +36,7 @@ public sealed class UrlShortener : IUrlShortener
 
         return result;
     }
-        
+
 
     public async Task<string> GetLongUrlAsync(string shortUrl, CancellationToken cancellationToken = default)
     {

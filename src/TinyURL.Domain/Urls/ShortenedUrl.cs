@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TinyURL.Domain.Urls;
+﻿namespace TinyURL.Domain.Urls;
 
 public class ShortenedUrl
 {

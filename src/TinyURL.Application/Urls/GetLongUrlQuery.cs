@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
 using TinyURL.Domain.Urls;
 
 namespace TinyURL.Application.Urls;

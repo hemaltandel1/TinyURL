@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TinyURL.Infrastructure.Persistence;
+﻿namespace TinyURL.Infrastructure.Persistence;
 
 public interface IDataStorage<TKey, TValue>
 {
