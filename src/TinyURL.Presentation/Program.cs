@@ -70,7 +70,9 @@ public class Program
             }
         }
 
-        private static async Task GenerateShortUrlAsync(CancellationToken cancellation)
+    private static async Task GenerateShortUrlAsync(CancellationToken cancellationToken)
+    {
+        try
         {
             Console.Write("Enter the long URL: ");
             var longUrl = Console.ReadLine();
@@ -84,11 +86,19 @@ public class Program
                 return;
             }
 
-            var shortUrl = await _urlShortener.GenerateShortUrlAsync(longUrl, customUrl, cancellation);
-            Console.WriteLine($"Generated Short URL : {shortUrl}");
+            var shortUrl = await _urlShortener.GenerateShortUrlAsync(longUrl, customUrl, cancellationToken);
+            Console.Write($"Generated Short URL: {shortUrl} \n\n");
+            
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to generate short URL: {ex.Message}");
+        }
+    }
 
-        private static async Task GetLongUrlAsync(CancellationToken cancellation)
+    private static async Task GetLongUrlAsync(CancellationToken cancellationToken)
+    {
+        try
         {
             Console.Write("Enter the short URL: ");
             var shortUrl = Console.ReadLine();
@@ -99,10 +109,18 @@ public class Program
                 return;
             }
 
-            await _urlShortener.GetLongUrlAsync(shortUrl, cancellation);
+            var longUrl = await _urlShortener.GetLongUrlAsync(shortUrl, cancellationToken);
+            Console.Write($"Found related Long URL: {longUrl} \n\n");
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to retrieve long URL: {ex.Message}");
+        }
+    }      
 
-        private static async Task DeleteShortUrlAsync(CancellationToken cancellation)
+    private static async Task DeleteShortUrlAsync(CancellationToken cancellationToken)
+    {
+        try
         {
             Console.Write("Enter the short URL to delete: ");
             var shortUrl = Console.ReadLine();
@@ -113,10 +131,17 @@ public class Program
                 return;
             }
 
-            await _urlShortener.DeleteShortUrlAsync(shortUrl, cancellation);
+            await _urlShortener.DeleteShortUrlAsync(shortUrl, cancellationToken);
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to delete short URL: {ex.Message}");
+        }
+    }
 
-        private static async Task GetStatisticsAsync(CancellationToken cancellation)
+    private static async Task GetStatisticsAsync(CancellationToken cancellationToken)
+    {
+        try
         {
             Console.Write("Enter the short URL to get statistics: ");
             var shortUrl = Console.ReadLine();
@@ -127,13 +152,19 @@ public class Program
                 return;
             }
 
-            await _urlShortener.GetStatisticsAsync(shortUrl, cancellation);
+            var count = await _urlShortener.GetStatisticsAsync(shortUrl, cancellationToken);
+            Console.WriteLine($"Long URL Clicked : {count}");
         }
-
-        private static bool IsValidShortUrl(string shortUrl)
+        catch (Exception ex)
         {
-            var regex = new Regex(@"^https:\/\/short\.url\/\w+$");
-            return regex.IsMatch(shortUrl);
+            Console.WriteLine($"Failed to retrieve statistics: {ex.Message}");
         }
+    }
+
+    private static bool IsValidShortUrl(string shortUrl)
+    {
+        var regex = new Regex(@"^https:\/\/tiny-url\.com\/\w+$");
+        return regex.IsMatch(shortUrl);
+    }
 }
 

@@ -1,4 +1,6 @@
-﻿namespace TinyURL.Domain.Urls;
+﻿using System;
+
+namespace TinyURL.Domain.Urls;
 
 public class ShortenedUrl
 {
@@ -22,8 +24,23 @@ public class ShortenedUrl
 
     public DateTime CreatedOnUtc { get; init; }
 
+    public int ClickCount { get; private set; }
+
     public static ShortenedUrl Create(string longUrl, string code) {
         return new ShortenedUrl(Guid.NewGuid(), longUrl, Host+code, code, DateTime.UtcNow );
+    }
+
+    public static string GetCode(string shortUrl)
+    {
+        // Assume that the code is the part after the last '/'
+        var uri = new Uri(shortUrl);
+        var code = uri.Segments.Last(); // Get the last segment of the URL
+
+        return code;
+    }
+
+    public void IncreaseClickCount() {
+        this.ClickCount++;
     }
 
 }

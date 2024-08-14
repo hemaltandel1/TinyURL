@@ -28,13 +28,18 @@ public sealed class UrlInMemoryRepository : IUrlRepository
         return false;
     }
 
-    public Task<ShortenedUrl> GetShortenedUrlByCode(string code, CancellationToken cancellationToken = default)
+    public async Task<ShortenedUrl?> GetShortenedUrlByCode(string code, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _dataStorage.FindByCodeAsync(code, cancellationToken);
     }
 
     public async Task InsertAsync(ShortenedUrl shortenedUrl, CancellationToken cancellationToken = default)
     {
         await _dataStorage.AddAsync(shortenedUrl.Id, shortenedUrl);
+    }
+
+    public async Task UpdateAsync(ShortenedUrl shortenedUrl, CancellationToken cancellationToken = default)
+    {
+        await _dataStorage.UpdateAsync(shortenedUrl.Id, shortenedUrl);
     }
 }

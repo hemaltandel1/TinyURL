@@ -31,13 +31,27 @@ public sealed class UrlShortener : IUrlShortener
     }
         
 
-    public Task<string> GetLongUrlAsync(string shortUrl, CancellationToken cancellationToken = default)
+    public async Task<string> GetLongUrlAsync(string shortUrl, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var query = new GetLongUrlQuery()
+        {
+            ShortUrl = shortUrl
+        };
+
+        var result = await _mediator.Send(query, cancellationToken);
+
+        return result;
     }
 
-    public Task<int> GetStatisticsAsync(string shortUrl, CancellationToken cancellationToken = default)
+    public async Task<int> GetStatisticsAsync(string shortUrl, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var query = new GetShortUrlStatisticsQuery()
+        {
+            ShortUrl = shortUrl
+        };
+
+        var result = await _mediator.Send(query, cancellationToken);
+
+        return result;
     }
 }

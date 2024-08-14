@@ -6,6 +6,7 @@ public interface IUrlRepository
 
     Task<bool> CodeExistAsync(string code, CancellationToken cancellationToken = default);
 
-    Task<ShortenedUrl> GetShortenedUrlByCode(string code, CancellationToken cancellationToken = default);
-    
+    Task<ShortenedUrl?> GetShortenedUrlByCode(string code, CancellationToken cancellationToken = default);
+
+    Task UpdateAsync(ShortenedUrl shortenedUrl, CancellationToken cancellationToken = default);
 }
