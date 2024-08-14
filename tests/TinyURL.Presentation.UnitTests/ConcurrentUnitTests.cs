@@ -3,7 +3,6 @@ using Shouldly;
 
 namespace TinyURL.Presentation.UnitTests;
 
-
 public class ConcurrentUnitTests : UnitTestsBase
 {
     private readonly IUrlShortener _urlShortener;

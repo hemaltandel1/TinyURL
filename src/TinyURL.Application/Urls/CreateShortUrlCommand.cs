@@ -36,6 +36,11 @@ public sealed class CreateShortUrlCommandHandler : IRequestHandler<CreateShortUr
             }
         }
 
+        // Improvements: There is a minor race condition here, as we generate a unique code first and then insert it into the database.
+        // A concurrent request could generate the same unique code and insert it into the database before we complete our transaction.
+        // However, the chances of this happening are low, so I decided not to handle that case.
+        // We can also solve this problem using optimistic concurrency with EF Core.
+
         var code = customUrl ?? await _urlShortningService.GenerateUniqueCodeAsync();
 
         var shortendUrl = ShortenedUrl.Create(request.LongUrl, code);
@@ -45,5 +50,3 @@ public sealed class CreateShortUrlCommandHandler : IRequestHandler<CreateShortUr
         return shortendUrl.ShortUrl;
     }
 }
-
-

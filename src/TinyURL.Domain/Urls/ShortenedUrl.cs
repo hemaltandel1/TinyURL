@@ -24,7 +24,8 @@ public class ShortenedUrl
 
     public int ClickCount { get; private set; }
 
-    public static ShortenedUrl Create(string longUrl, string code) {
+    public static ShortenedUrl Create(string longUrl, string code) 
+    {
         return new ShortenedUrl(Guid.NewGuid(), longUrl, Host+code, code, DateTime.UtcNow );
     }
 
@@ -40,5 +41,4 @@ public class ShortenedUrl
     public void IncreaseClickCount() {
         this.ClickCount++;
     }
-
 }
